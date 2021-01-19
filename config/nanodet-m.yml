@@ -1,5 +1,5 @@
 #Config File example
-save_dir: workspace/nanodet_m
+save_dir: workspace/nanodet_m_pre_lr
 model:
   arch:
     name: GFL
@@ -16,7 +16,7 @@ model:
       num_outs: 3
     head:
       name: NanoDetHead
-      num_classes: 80
+      num_classes: 1
       input_channel: 96
       feat_channels: 96
       stacked_convs: 2
@@ -42,9 +42,9 @@ model:
 data:
   train:
     name: coco
-    img_path: coco/train2017
-    ann_path: coco/annotations/instances_train2017.json
-    input_size: [320,320] #[w,h]
+    img_path: ../data/yoga_coco/images/train2017
+    ann_path: ../data/yoga_coco/annotations/instances_train2017.json
+    input_size: [416,416] #[w,h]
     keep_ratio: True
     pipeline:
       perspective: 0.0
@@ -60,52 +60,41 @@ data:
       normalize: [[103.53, 116.28, 123.675], [57.375, 57.12, 58.395]]
   val:
     name: coco
-    img_path: coco/val2017
-    ann_path: coco/annotations/instances_val2017.json
-    input_size: [320,320] #[w,h]
+    img_path: ../data/yoga_coco/images/val2017
+    ann_path: ../data/yoga_coco/annotations/instances_val2017.json
+    input_size: [416,416] #[w,h]
     keep_ratio: True
     pipeline:
       normalize: [[103.53, 116.28, 123.675], [57.375, 57.12, 58.395]]
 device:
   gpu_ids: [0]
-  workers_per_gpu: 12
-  batchsize_per_gpu: 160
+  workers_per_gpu: 4
+  batchsize_per_gpu: 50
 schedule:
 #  resume:
 #  load_model: YOUR_MODEL_PATH
   optimizer:
     name: SGD
-    lr: 0.14
+    lr: 0.10
     momentum: 0.9
     weight_decay: 0.0001
   warmup:
     name: linear
     steps: 300
     ratio: 0.1
-  total_epochs: 190
+  total_epochs: 100
   lr_schedule:
     name: MultiStepLR
     milestones: [130,160,175,185]
     gamma: 0.1
-  val_intervals: 10
+  val_intervals: 5
+#  load_model : '/media/hkuit164/TOSHIBA/nanodet/tools/workspace/nanodet_m/model_best/model_best.pth'
+#  load_model : '/media/hkuit164/TOSHIBA/nanodet/nanodet_m.pth'
 evaluator:
   name: CocoDetectionEvaluator
   save_key: mAP
 
 log:
-  interval: 10
+  interval: 5
 
-class_names: ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
-              'train', 'truck', 'boat', 'traffic_light', 'fire_hydrant',
-              'stop_sign', 'parking_meter', 'bench', 'bird', 'cat', 'dog',
-              'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe',
-              'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-              'skis', 'snowboard', 'sports_ball', 'kite', 'baseball_bat',
-              'baseball_glove', 'skateboard', 'surfboard', 'tennis_racket',
-              'bottle', 'wine_glass', 'cup', 'fork', 'knife', 'spoon', 'bowl',
-              'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot',
-              'hot_dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-              'potted_plant', 'bed', 'dining_table', 'toilet', 'tv', 'laptop',
-              'mouse', 'remote', 'keyboard', 'cell_phone', 'microwave',
-              'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock',
-              'vase', 'scissors', 'teddy_bear', 'hair_drier', 'toothbrush']
+class_names: ['person', ]

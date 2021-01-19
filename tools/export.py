@@ -13,8 +13,8 @@ def main(config, model_path, output_path, input_shape=(320, 320)):
     print('finished exporting onnx ')
 
 if __name__ == '__main__':
-    cfg_path = r"config/nanodet-m.yml"
-    model_path = r"nanodet_m.pth"
-    out_path = r'output.onnx'
+    cfg_path = r"../config/nanodet-m.yml"
+    model_path = r"/media/hkuit164/TOSHIBA/nanodet/tools/workspace/nanodet_m_pre_lr/model_best/model_best.pth"
+    out_path = r'person_lr.onnx'
     load_config(cfg, cfg_path)
-    main(cfg, model_path, out_path, input_shape=(320, 320))
+    main(cfg, model_path, out_path, input_shape=(416, 416))
