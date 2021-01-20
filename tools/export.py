@@ -14,7 +14,7 @@ def main(config, model_path, output_path, input_shape=(320, 320)):
 
 if __name__ == '__main__':
     cfg_path = r"../config/nanodet-m.yml"
-    model_path = r"/media/hkuit164/TOSHIBA/nanodet/tools/workspace/nanodet_m_pre_lr/model_best/model_best.pth"
-    out_path = r'person_lr.onnx'
+    model_path = r"/media/hkuit164/WD20EJRX/nanodet/tools/workspace/nanodet_m_coco/model_best/model_best.pth"
+    out_path = r'nano_coco.onnx'
     load_config(cfg, cfg_path)
     main(cfg, model_path, out_path, input_shape=(416, 416))

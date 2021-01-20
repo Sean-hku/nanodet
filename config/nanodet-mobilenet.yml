@@ -1,18 +1,18 @@
 #Config File example
-save_dir: workspace/nanodet_m_mobile_2
+save_dir: workspace/nanodet_m_mobile_4
 model:
   arch:
     name: GFL
     backbone:
       name: MobileNetV2
       width_mult: 1.0
-      out_stages: [3, 5, 6]
+      out_stages: [3,4, 5, 6]
     fpn:
       name: PAN
-      in_channels: [64, 160, 1280]
+      in_channels: [64, 96, 160, 1280]
       out_channels: 96
       start_level: 0
-      num_outs: 3
+      num_outs: 4
     head:
       name: NanoDetHead
       num_classes: 1
@@ -81,10 +81,10 @@ schedule:
     name: linear
     steps: 300
     ratio: 0.1
-  total_epochs: 100
+  total_epochs: 60
   lr_schedule:
     name: MultiStepLR
-    milestones: [130,160,175,185]
+    milestones: [30,50]
     gamma: 0.1
   val_intervals: 5
 #  load_model : '/media/hkuit164/TOSHIBA/nanodet/tools/workspace/nanodet_m/model_best/model_best.pth'
