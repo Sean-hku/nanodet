@@ -146,7 +146,7 @@ class ShuffleNetV2(nn.Module):
                 output.append(x)
         return tuple(output)
 
-    def _initialize_weights(self, pretrain=True):
+    def _initialize_weights(self, pretrain=False):
         print('init weights...')
         for name, m in self.named_modules():
             if isinstance(m, nn.Conv2d):

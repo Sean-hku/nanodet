@@ -120,9 +120,9 @@ class Yolo2Coco:
 
 
 if __name__ == "__main__":
-    label_pth = "/media/hkuit164/WD20EJRX/yolov3-channel-and-layer-pruning/data/yoga/1"
-    imgs_pth = "/media/hkuit164/TOSHIBA/nanodet/data/yoga"
-    saved_coco_pth = "/media/hkuit164/WD20EJRX/yolov3-channel-and-layer-pruning/data/yoga/2/"
+    label_pth = "/home/user/Documents/yolov3-channel-and-layer-pruning/data/COCO/txt"
+    imgs_pth = "/home/user/Documents/yolov3-channel-and-layer-pruning/data/COCO/JPEGImages_rgb"
+    saved_coco_pth = "data/"
     # make dir for coco
     if not os.path.exists("%syoga_coco/annotations" % saved_coco_pth):
         os.makedirs("%syoga_coco/annotations/" % saved_coco_pth)
