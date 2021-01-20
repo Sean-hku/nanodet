@@ -9,4 +9,3 @@ matplotlib
 pyaml
 opencv-python
 tqdm
-
