@@ -12,7 +12,7 @@ from nanodet.data.dataset import build_dataset
 from nanodet.model.arch import build_model
 from nanodet.evaluator import build_evaluator
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('config', help='train config file path')

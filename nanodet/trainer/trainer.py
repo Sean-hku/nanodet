@@ -133,12 +133,12 @@ class Trainer:
                 param_group['lr'] = lr
 
         for epoch in range(start_epoch, self.cfg.schedule.total_epochs + 1):
-            if self.epoch > self.cfg.schedule.total_epochs *0.7 and self.epoch < self.cfg.schedule.total_epochs *0.9:
-                for param_group in self.optimizer.param_groups:
-                    param_group['lr'] = self.cfg.schedule.optimizer.lr *0.1
-            elif self.epoch > self.cfg.schedule.total_epochs *0.9:
-                for param_group in self.optimizer.param_groups:
-                    param_group['lr'] = self.cfg.schedule.optimizer.lr *0.01
+            # if self.epoch > self.cfg.schedule.total_epochs *0.7 and self.epoch < self.cfg.schedule.total_epochs *0.9:
+            #     for param_group in self.optimizer.param_groups:
+            #         param_group['lr'] = self.cfg.schedule.optimizer.lr *0.1
+            # elif self.epoch > self.cfg.schedule.total_epochs *0.9:
+            #     for param_group in self.optimizer.param_groups:
+            #         param_group['lr'] = self.cfg.schedule.optimizer.lr *0.01
             results, train_loss_dict = self.run_epoch(epoch, train_loader, mode='train')
             self.lr_scheduler.step()
             save_model(self.rank, self.model, os.path.join(self.cfg.save_dir, 'model_last.pth'), epoch, self._iter, self.optimizer)
