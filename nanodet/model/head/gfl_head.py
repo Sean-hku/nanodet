@@ -453,10 +453,16 @@ class GFLHead(nn.Module):
                     det_bboxes[inds, 4:5].astype(np.float32)], axis=1).tolist()
         return preds
 
-    def show_result(self, img, dets, class_names, score_thres=0.3, show=True, save_path=None):
+    def show_result(self, img, dets, class_names, out,score_thres=0.3, show=True, save_path=None):
         result = overlay_bbox_cv(img, dets, class_names, score_thresh=score_thres)
+        write = True
+        if write:
+            # cv2.resize(result,(640,480))
+            out.write(cv2.resize(result,(1280,720)))
         if show:
             cv2.imshow('det', result)
+            cv2.waitKey(40)
+
 
     def get_bboxes(self,
                    cls_scores,

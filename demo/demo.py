@@ -14,7 +14,7 @@ video_ext = ['mp4', 'mov', 'avi', 'mkv']
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('demo', default='image', help='demo type, eg. image, video and webcam')
+    parser.add_argument('demo', default='video', help='demo type, eg. image, video and webcam')
     parser.add_argument('--config', help='model config file path')
     parser.add_argument('--model', help='model file path')
     parser.add_argument('--path', default='./demo', help='path to images or video')
@@ -59,9 +59,9 @@ class Predictor(object):
             results = self.model.inference(meta)
         return meta, results
 
-    def visualize(self, dets, meta, class_names, score_thres, wait=0):
+    def visualize(self, dets, meta, class_names, out, score_thres,wait=0):
         time1 = time.time()
-        self.model.head.show_result(meta['raw_img'], dets, class_names, score_thres=score_thres, show=True)
+        self.model.head.show_result(meta['raw_img'], dets, class_names, out ,score_thres=score_thres, show=True)
         print('viz time: {:.3f}s'.format(time.time()-time1))
 
 
@@ -99,10 +99,12 @@ def main():
                 break
     elif args.demo == 'video' or args.demo == 'webcam':
         cap = cv2.VideoCapture(args.path if args.demo == 'video' else args.camid)
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter('output.mp4', fourcc, 15.0, (1280, 720))
         while True:
             ret_val, frame = cap.read()
             meta, res = predictor.inference(frame)
-            predictor.visualize(res, meta, cfg.class_names, 0.35)
+            predictor.visualize(res, meta, cfg.class_names, out, 0.35)
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord('q') or ch == ord('Q'):
                 break

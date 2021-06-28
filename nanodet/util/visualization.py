@@ -18,14 +18,28 @@ def overlay_bbox_cv(img, dets, class_names, score_thresh):
                 x0, y0, x1, y1 = [int(i) for i in bbox[:4]]
                 all_box.append([label, x0, y0, x1, y1, score])
     all_box.sort(key=lambda v: v[5])
-    for box in all_box:
+    index = [i[2] for i in all_box].index(max([i[2] for i in all_box]))
+    y_cor_list = all_box[index]
+    y_cor = (y_cor_list[4] - y_cor_list[2])//2 + y_cor_list[2]
+    # cv2.line(img,(0,y_cor),(img.shape[1],y_cor),color=(0, 0, 255),thickness=2)
+    # cv2.line(img,(0,700),(img.shape[1],700),color=(0, 255, 255),thickness=2)
+    box1 = all_box[index]
+
+    if y_cor < 700 :
+        cv2.putText(img,'Alarm',(900,700),cv2.FONT_HERSHEY_SIMPLEX,4,(0,0,255),16)
+        cv2.rectangle(img, (700, 500), (1500, 1000), (0, 0, 255), 16)
+
+    print(all_box)
+    for i,box in enumerate(all_box):
         label, x0, y0, x1, y1, score = box
         # color = self.cmap(i)[:3]
-        color = (_COLORS[label] * 255).astype(np.uint8).tolist()
+        # color = (_COLORS[label] * 255).astype(np.uint8).tolist()
+        color = (0,255,0)
         text = '{}:{:.1f}%'.format(class_names[label], score * 100)
         txt_color=(0, 0, 0) if np.mean(_COLORS[label]) > 0.5 else (255, 255, 255)
         font = cv2.FONT_HERSHEY_SIMPLEX
         txt_size = cv2.getTextSize(text, font, 0.5, 2)[0]
+
         cv2.rectangle(img, (x0, y0), (x1, y1), color, 2)
 
         cv2.rectangle(img,
